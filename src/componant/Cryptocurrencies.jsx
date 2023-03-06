@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { useGetCryptosQuery } from './serviecs/cryptoApi'
 import TextField from '@mui/material/TextField';
 
-import { Card, CardActionArea, CardContent, CardMedia, Divider, Typography } from '@mui/material'
+import { Card, CardActionArea, CardContent, CardMedia, Container, Divider, Grid, Typography } from '@mui/material'
 
 const Cryptocurrencies = ({simplified }) => {
     const count = simplified ? 10 : 100
@@ -23,27 +23,29 @@ const Cryptocurrencies = ({simplified }) => {
 
 if (isFetching) return 'loading ...'
   return (
-    <>
-    <div style={{marginTop:80}}>
+    
+    <div >
     {!simplified && (
-    <div>
-    <TextField sx={{marginLeft:{sm: 105 , xs: 10} }} label="Search Cryptocurrency" variant="standard"
+    <div style={{textAlign:'center', marginLeft:'5rem'}}>
+     <TextField label="Search Cryptocurrency" variant="standard"
     onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
     />
     </div>
        )}
+       <Grid  item xs={4} sx={{paddingLeft:'4rem', textAlign:'center'}} >
        {cryptos?.map  ((currecny) => 
 
-    <Link to={`/crypto/${currecny.uuid}`}  style={{textDecoration:'none', display:'inline-block',  }}  >
-      <Card sx={{ minWidth:{sm:330, xs:300}, maxWidth:{sm:330, xs:300}, minHeight: 300, maxHeight: 300, background:'black', color:'orange',margin: {sm:'30px 10px 10px 100px', xs:'30px 10px 10px 50px'} }}>
+    <Link to={`/crypto/${currecny.uuid}`}  style={{textDecoration:'none'}}  >
+
+      <Card sx={{ minWidth:{sm:330, xs:300}, maxWidth:{sm:330, xs:300}, minHeight: 300, maxHeight: 300, background:'gray', color:'white', display:'inline-block', margin:{sm:'1rem 0 1rem 1rem', xs:'1rem 0 0 0'}}}>
        <CardActionArea>
     
          <CardContent>
-           <Typography gutterBottom variant="h5" component="div" style={{display:'flex',color:'orange'}}>
+           <Typography gutterBottom variant="h5" component="div" style={{display:'flex',color:'white'}}>
             {`${currecny.rank}.${currecny.name}`}
 
              <CardMedia
-                style={{ color:'orange', height:"40px", width:"40px", alignItems:'right', display:'flex', margin:'-5px 0 0 100px'}}
+                style={{ color:'white', height:"40px", width:"40px", alignItems:'right', display:'flex', margin:'-5px 0 0 100px'}}
                 component="img"
                 src={currecny.iconUrl}
                 alt="green iguana"          
@@ -67,9 +69,11 @@ if (isFetching) return 'loading ...'
        </Card>
  
       </Link>
+      
       )}
+      </Grid>
     </div>
-    </>
+    
   )
 }
 

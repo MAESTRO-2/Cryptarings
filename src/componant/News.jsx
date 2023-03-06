@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import moment from 'moment';
 import { useGetCryptoNewsQuery } from './serviecs/cryptoNewsApi';
-import { Avatar, Card, CardActionArea, CardContent, CardMedia, Divider, Typography } from '@mui/material';
+import { Avatar, Card, CardActionArea, CardContent, CardMedia, Container, Divider, Grid, Typography } from '@mui/material';
 
 const demoImage = 'https://www.bing.com/th?id=OVFT.mpzuVZnv8dwIMRfQGPbOPC&pid=News';
 
@@ -15,19 +15,19 @@ const News = ({simplified}) => {
   if (!cryptoNews?.value) return('loading ...')
 
   return (
-    <>
-        <div style={{marginTop:80}}>
+    <Grid item xs={4} sx={{textAlign:'center'}}>
+
           {cryptoNews?.value?.map((news, i) =>(
           <a href={news.url} target="_blank" rel="noreferrer" style={{textDecoration:'none', display:'inline-block',  }}>
-        <Card sx={{ minWidth:{sm:360, xs:360}, maxWidth:{sm:400, xs:400}, minHeight: 380, maxHeight: 320, background:'black', color:'orange',margin: {sm:'30px 10px 10px 170px', xs:'30px 10px 10px 13px'} }}>
+        <Card sx={{background:'gray', maxWidth:{xs:'20rem', sm:'25rem'},minHeight:'25rem',maxHight:'25rem', margin:'0 0 1rem 3rem', display:{xs:'block', sm:'ab'} , }}>
          <CardActionArea>
     
            <CardContent>
-            <Typography gutterBottom variant="h6" component="div" style={{display:'flex',color:'orange'}}>
+            <Typography gutterBottom variant="h6" component="div" style={{display:'flex'}}>
              {`${news.name}`}
 
              <CardMedia
-                style={{ color:'orange', height:"80px", width:"80px", alignItems:'right', display:'flex', margin:'-5px 0 0 100px'}}
+                style={{ height:"80px", width:"80px", alignItems:'right', display:'flex', margin:'-5px 0 0 50px'}}
                 component="img"
                 src={news?.image?.thumbnail?.contentUrl || demoImage}
                 alt="green iguana"          
@@ -48,8 +48,7 @@ const News = ({simplified}) => {
        </Card>
        </a>
         ))}
-        </div>
-    </>
+        </Grid>
   )
 }
 

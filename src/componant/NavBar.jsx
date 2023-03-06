@@ -1,116 +1,170 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
+import { styled, useTheme } from '@mui/material/styles';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import HomeIcon from '@mui/icons-material/Home';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
 import { Link } from 'react-router-dom';
+import { Container } from '@mui/material';
+import { Box } from '@mui/system';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Cryptocurrencies', 'News'];
 
-function DrawerAppBar(props) {
-  const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+const openedMixin = (theme) => ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+});
 
-  const handleDrawerToggle = () => {
-    setMobileOpen((prevState) => !prevState);
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
+    }),
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
+    }),
+  }),
+);
+
+export default function MiniDrawer() {
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center',  }} >
-      <Divider />
-      <List >
-        {navItems.map((item) => (
-             
-          <Link key={item} to={`/${item}`} style={{textDecoration:'none', color:'black', marginTop:'50px'}}>
-              <ListItem key={item} disablePadding >
-                <ListItemButton key={item} sx={{ textAlign: 'center',}}>
-                 <ListItemText  primary={item} />
-                </ListItemButton>
-               </ListItem>
-        </Link>
-        ))}
-      </List>
-    </Box>
-  );
-
-  const container = window !== undefined ? () => window().document.body : undefined;
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <Box sx={{ display: 'flex',  }}>
+    <Container sx={{marginBottom:'5rem'}}>
       <CssBaseline />
-      <AppBar component="nav" sx={{background:'black', color:'orange', }}>
+      <AppBar color='' position='fixed' open={open} elevation={0}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
+            onClick={handleDrawerOpen}
             edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
           >
             <MenuIcon />
           </IconButton>
-          <Box >
-         <Link to="/" style={{textDecoration:'none'}}><img src='https://www.freepngimg.com/thumb/bitcoin/59669-cryptocurrency-logo-ethereum-zazzle-bitcoin-hd-image-free-png-thumb.png' alt='logo' style={{width:'50px', height:'50px', margin:'3px 5px 0 0'}} /></Link> 
-          </Box>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: 'block', sm: 'block' }, 
-            
-            }}
-          >
-              <Link to="/" style={{textDecoration:'none', color:'orange'}}>Cryptarings</Link>
+          <img src='https://www.freepngimg.com/thumb/bitcoin/59669-cryptocurrency-logo-ethereum-zazzle-bitcoin-hd-image-free-png-thumb.png' alt='logo' style={{width:'50px', height:'50px' }} />
+          <Typography variant="h6" noWrap component="div" sx={{marginLeft:{sm:'0.5rem', xs:'2rem'}}}>
+          Cryptarings
           </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block', },  marginRight:'300px'  }}>
-            {navItems.map((item) => (
-              <Link key={item} to={`/${item}`} style={{textDecoration:'none' ,  marginRight:'220px' }}> 
-                  <Button key={item} sx={{ color: 'orange' }}>
-                   {item}
-                  </Button>
-              </Link>
-            ))}
-          </Box>
         </Toolbar>
       </AppBar>
-      <Box  component="nav">
-        <Drawer
-          container={container}
-          variant="temporary"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
-          }}
-          sx={{
-            display: { xs: 'block', sm: 'none',   },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Box>
-    </Box>
+      <Drawer variant="permanent" open={open} >
+        <DrawerHeader>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </DrawerHeader>
+        
+        <List >
+          {['Home', 'Cryptocurrencies', 'News'].map((text, index) => (
+           <Link key={text} to={`/${text}`} style={{textDecoration:'none' , color:'gray' }}>
+            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+              
+              <ListItemButton
+                sx={{ 
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                }}
+              >  
+             
+              
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                  }}
+                >
+                 
+                  {index % 3 === 0 ? <HomeIcon /> : <CurrencyBitcoinIcon/>}
+        
+                </ListItemIcon>
+                
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                
+              </ListItemButton>
+              
+            </ListItem>
+            </Link>
+          ))}
+        </List>
+        
+      </Drawer>
+    </Container>
   );
 }
-
-DrawerAppBar.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
-
-export default DrawerAppBar;

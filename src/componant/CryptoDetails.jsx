@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem, Paper, Select, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
+import { Container, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableCell, TableContainer, TableRow, Typography } from '@mui/material'
 import { orange } from '@mui/material/colors';
 import { Box } from '@mui/system'
 import HTMLReactParser from 'html-react-parser';
@@ -44,7 +44,7 @@ const CryptoDetails = () => {
   
   return (
    
-    <div style={{marginTop:80}}>
+    <Grid item xs={4} sx={{ paddingLeft:'4rem',paddingRight:'0.8rem', textAlign:'center'}} >
 
        <Typography sx={{color:'orange', textAlign:'center'}} variant="h6" gutterBottom> {`${data?.data?.coin.name} (${data?.data?.coin.symbol}) price`}</Typography> 
        <p style={{color:'orange', textAlign:'center'}} >{data?.data?.coin.name} live price in US Dollar (USD). View value statistics, market cap and supply.</p>
@@ -52,13 +52,13 @@ const CryptoDetails = () => {
     <LineChart coinHistory={coinHistory} currentPrice={millify(Details?.price)} coinName={Details?.name} />
 
     
-    <Box sx={{display:{sm:'flex'}, marginBottom:'50px'}}>
+    <Box sx={{display:{sm:'flex'}, marginBottom:'50px',}}>
 
-    <Box sx={{marginRight:{sm:'200px'}, marginLeft:{sm:'100px'}}}>
-    <Typography sx={{color:'orange', textAlign:{xs:'center', sm:'left'}}}  variant="h6" gutterBottom> {data?.data?.coin.name} Value Statistics An overview showing the statistics of {data?.data?.coin.name}, <br/>such as the base and quote currency, the rank, and trading volume.</Typography>
+    <Box sx={{marginRight:{sm:'200px'}, marginLeft:{sm:'100px'},marginTop:'1rem' }}>
+    <Typography sx={{color:'orange', textAlign:"center"}}  variant="h6" gutterBottom> {data?.data?.coin.name} Value Statistics An overview showing the statistics of {data?.data?.coin.name}, <br/>such as the base and quote currency, the rank, and trading volume.</Typography>
     {stats.map(({ title, value }) => (
     <TableContainer component={Paper}>
-    <Table sx={{ maxWidth: 650, textAlign:'right' }} aria-label="simple table">
+    <Table sx={{ maxWidth: 650, textAlign:'right', }} aria-label="simple table">
     <TableRow>
             <TableCell> {title} </TableCell>
             <TableCell sx={{textAlign:'right'}}> {value} </TableCell>
@@ -70,7 +70,7 @@ const CryptoDetails = () => {
 
     
      <Box >
-    <Typography sx={{color:'orange', textAlign:{xs:'center', sm:'right'}}}  variant="h6" gutterBottom>Other Stats Info  An overview showing the statistics of {data?.data?.coin.name}, <br/>such as the base and quote currency, the rank, and trading volume.</Typography>
+    <Typography sx={{color:'orange', textAlign:'center',marginTop:'1rem'}}  variant="h6" gutterBottom>Other Stats Info  An overview showing the statistics of {data?.data?.coin.name}, <br/>such as the base and quote currency, the rank, and trading volume.</Typography>
      {genericStats.map(({ title, value }) => (
     <TableContainer component={Paper}>
     <Table sx={{ maxWidth: 650 }} aria-label="simple table">
@@ -85,7 +85,7 @@ const CryptoDetails = () => {
 
      </Box>
 
-      <Box sx={{display:{sm:'flex'}, marginBottom:'50px'}}>
+      <Box sx={{display:{sm:'inline-block'},  margin:'auto'}}>
       <Box sx={{minWidth:{sm:'700px', xs:'350'}, maxwidth:'650', marginLeft:{sm:13}}}>
       <Typography sx={{color:'orange'}}  variant="h6" gutterBottom>What is {data?.data?.coin.name}?</Typography>
       <div style={{color:'orange', overflowWrap:'anywhere', }}  dangerouslySetInnerHTML={{__html : data?.data?.coin.description}}>
@@ -94,12 +94,12 @@ const CryptoDetails = () => {
       </Box>
       
 
-      <Box sx={{marginLeft:{sm:'125px'}, marginRight:{sm:'600px'}, marginTop:{sm:'50px'}}}>
+      <Box sx={{ marginTop:{sm:'50px', maxWidth:'600px',marginTop:'1rem'}}}>
       <Typography variant="h6" gutterBottom>{data?.data?.coin.name} Links</Typography>
       {data?.data?.coin.links?.map((link) => (
-        <TableContainer component={Paper}>
-        <Table sx={{ minWidth:{xs: 350, sm: 600 }}} aria-label="simple table">
-        <TableRow>
+        <TableContainer component={Paper} sx={{ maxWidth:'600px'}} >
+        <Table sx={{ maxWidth:'600px'}} aria-label="simple table">
+        <TableRow >
             <TableCell variant="h6" gutterBottom>{link.type}</TableCell>
             <TableCell sx={{textAlign:'right'}}>  <a href={link.url} target="_blank" rel="noreferrer">{link.name}</a></TableCell>
          </TableRow>
@@ -109,24 +109,8 @@ const CryptoDetails = () => {
         </Box>
         </Box>
    
-    </div>
+    </Grid>
     )
 }
 
 export default CryptoDetails
-/* 
-  <Box sx={{ maxWidth: 120, marginBottom:'20px' }}>
-      <FormControl fullWidth sx={{marginLeft:{sm:13}}}>
-      <InputLabel id="demo-simple-select-label">Date</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Date"
-          onChange={handleChange}
-          >
-          {time.map((date) => <MenuItem key={date}>{date}</MenuItem>)}
-
-        </Select>
-      </FormControl>
-    </Box>
-*/ 

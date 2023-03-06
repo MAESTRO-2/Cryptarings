@@ -7,11 +7,10 @@ import { Route , Routes  } from 'react-router-dom'
 
 const App = () => {
   return (
-    <div style={{fontWeight: 'bold', color:'black'
-  }}>
+    <div style={{fontWeight: 'bold'}}>
        <NavBar />
-       <Routes>
-         <Route path='/' element={<HomePage />}/>
+       <Routes >
+         <Route  path='/' element={<HomePage />}/>
          <Route path='/home' element={<HomePage />}/>
          <Route path='/Cryptocurrencies' element={<Cryptocurrencies />}/>
          <Route path="/crypto/:coinId" element={<CryptoDetails />}></Route>
