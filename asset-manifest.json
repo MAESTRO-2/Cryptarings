@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Cryptarings/static/js/main.80323552.js",
-    "index.html": "/Cryptarings/index.html",
-    "main.80323552.js.map": "/Cryptarings/static/js/main.80323552.js.map"
+    "main.js": "/Cryptarings2/static/js/main.db7d5a8f.js",
+    "index.html": "/Cryptarings2/index.html",
+    "main.db7d5a8f.js.map": "/Cryptarings2/static/js/main.db7d5a8f.js.map"
   },
   "entrypoints": [
-    "static/js/main.80323552.js"
+    "static/js/main.db7d5a8f.js"
   ]
 }
