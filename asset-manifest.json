@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/Cryptarings2/static/js/main.db7d5a8f.js",
+    "main.js": "/Cryptarings2/static/js/main.dfc7052c.js",
     "index.html": "/Cryptarings2/index.html",
-    "main.db7d5a8f.js.map": "/Cryptarings2/static/js/main.db7d5a8f.js.map"
+    "main.dfc7052c.js.map": "/Cryptarings2/static/js/main.dfc7052c.js.map"
   },
   "entrypoints": [
-    "static/js/main.db7d5a8f.js"
+    "static/js/main.dfc7052c.js"
   ]
 }
